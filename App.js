@@ -1,32 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+
+// In flat lists items not all the items are loaded at once. They are loaded as we scroll through the list (lazy loading)
+// Specify a differently named key property (default is "key", in this case "id") using the keyExtractor prop
+// We can adjust the items in grids using the numColumns prop
 
 export default function App() {
   const [people, setPeople] = useState([
-    {name: 'Alpha', key: 1},
-    {name: 'Beta', key: 2},
-    {name: 'Gamma', key: 3},
-    {name: 'Delta', key: 4},
-    {name: 'Epsilon', key: 5},
-    {name: 'Zeta', key: 6},
-    {name: 'Eta', key: 7},
-    {name: 'Theta', key: 8},
-    {name: 'Iota', key: 9},
-    {name: 'Kappa', key: 10},
+    {name: 'Alpha', id: '1'},
+    {name: 'Beta', id: '2'},
+    {name: 'Gamma', id: '3'},
+    {name: 'Delta', id: '4'},
+    {name: 'Epsilon', id: '5'},
+    {name: 'Zeta', id: '6'},
+    {name: 'Eta', id: '7'},
+    {name: 'Theta', id: '8'},
+    {name: 'Iota', id: '9'},
+    {name: 'Kappa', id: '10'},
   ]);
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {
-          people.map((eachPerson) => (
-            <View style={styles.eachPerson} key={eachPerson.key}>
-              <Text>{eachPerson.name}</Text>
-            </View>
-          ))
-        }
-      </ScrollView>
+      <FlatList
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        data={people}
+        renderItem={({ item }) => (
+          <Text style={styles.eachPerson}>{ item.name }</Text>
+        )} />
       <StatusBar style="auto" />
     </View>
   );
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0096c7',
     marginVertical: 12, 
     padding: 30,
-    fontSize: 24
+    fontSize: 24,
+    marginHorizontal: 20,
   },
 });
