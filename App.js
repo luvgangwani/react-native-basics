@@ -16,7 +16,7 @@ export default function App() {
       <Text>Enter Age:</Text>
       <TextInput
       keyboardType='numeric'
-      placeholder='e.g. Beta'
+      placeholder='e.g. 30'
       style={styles.input}
       onChangeText={(newAge) => setAge(newAge)} />
       <Text>Name: {name}, Age: {age}</Text>
