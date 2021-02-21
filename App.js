@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 // In flat lists items not all the items are loaded at once. They are loaded as we scroll through the list (lazy loading)
 // Specify a differently named key property (default is "key", in this case "id") using the keyExtractor prop
@@ -20,6 +20,10 @@ export default function App() {
     {name: 'Kappa', id: '10'},
   ]);
 
+  const pressHandler = (itemId) => {
+    setPeople((prevPeople) => prevPeople.filter(({ id }) => id != itemId));
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -27,7 +31,9 @@ export default function App() {
         keyExtractor={(item) => item.id}
         data={people}
         renderItem={({ item }) => (
-          <Text style={styles.eachPerson}>{ item.name }</Text>
+          <TouchableOpacity onPress={() => pressHandler(item.id)}>
+            <Text style={styles.eachPerson}>{ item.name }</Text>
+          </TouchableOpacity>
         )} />
       <StatusBar style="auto" />
     </View>
