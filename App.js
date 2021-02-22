@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Alert, FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import AddTodo from './components/addTodo';
 import Header from './components/header';
 import TodoItem from './components/todoItem';
@@ -22,6 +22,7 @@ export default function App() {
       ...prevTodos,
       {text: newTodo, key: Math.random().toString()}
       ]));
+      Keyboard.dismiss();
     }
     else {
       Alert.alert(
@@ -36,19 +37,21 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <AddTodo onAddNewTodoHandler={addNewTodoHandler} />
-        <View style={styles.list}>
-          <FlatList 
-            data={todos}
-            renderItem={({ item }) => <TodoItem item={ item } onPressHandler={pressHandler} />}
-          />
+    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <AddTodo onAddNewTodoHandler={addNewTodoHandler} />
+          <View style={styles.list}>
+            <FlatList 
+              data={todos}
+              renderItem={({ item }) => <TodoItem item={ item } onPressHandler={pressHandler} />}
+            />
+          </View>
         </View>
+        <StatusBar style="auto" />
       </View>
-      <StatusBar style="auto" />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
